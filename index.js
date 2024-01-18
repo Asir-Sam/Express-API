@@ -2,6 +2,8 @@ const express = require('express');
 const apiRouter = express.Router();
 const createConnection = require('./DBManagement/DbController');
 const selectQuery = require('./DBManagement/DbHelper');
+const basicUtils = require('./UTIL/basicUtil');
+
 const app = express();
 const port = 3000;
 const path = require('path');
@@ -29,6 +31,8 @@ const customDBConfig = {
           case "device":
             tableName = "EMS_DEVICE_INFO";
             break;
+          case 'ups':
+             tableName = "EMS_UPS_INFO";
           default:
             break;
         } 
@@ -38,6 +42,13 @@ const customDBConfig = {
         console.error(error);
       }
     }
+,
+    getLimit (queryParam) {
+
+      if(!basicUtils.isEmptyObject(queryParam))
+        return Object.keys(queryParam).includes('limit') ? queryParam['limit'] : undefined;
+    
+    }
 
  } 
 
@@ -45,7 +56,9 @@ const customDBConfig = {
 app.get('/ems/api/inventory/:inventoryType', (req, res, next) => {
 
     let tableName = tableMapping.getInventoryTable(req.params.inventoryType, res);
-    let dbData = selectQuery(connection, tableName, res);
+    let quertLimit = tableMapping.getLimit(req.query);
+    console.log(quertLimit);
+    let dbData = selectQuery(connection, tableName, quertLimit, res);
     
   });
   

@@ -1,6 +1,9 @@
-function selectQuery (connection, tableName, res) {
-    if(tableName !== undefined){
-        var DBresult = connection.query(`SELECT * FROM ${tableName}`, function (err, result, fields) {
+const basicUtils = require('../UTIL/basicUtil');
+
+function selectQuery (connection, tableName, quertLimit ,res) {
+    let queryString = basicUtils.getQueryString(tableName, quertLimit);
+    if(queryString !== null && queryString !== undefined) {
+        var DBresult = connection.query(queryString, function (err, result, fields) {
             if (err) throw err;
        
             res.status(200).json(result);
