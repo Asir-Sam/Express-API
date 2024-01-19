@@ -3,7 +3,7 @@ const apiRouter = express.Router();
 const createConnection = require('./DBManagement/DbController');
 const selectQuery = require('./DBManagement/DbHelper');
 const basicUtils = require('./UTIL/basicUtil');
-
+const confController = require('./ConfManagement/ConfController');
 const app = express();
 const port = 3000;
 const path = require('path');
@@ -71,6 +71,8 @@ app.get('*', (req, res, next) => {
 app.listen(port, (err, res) => {
 
     console.log(`Example app listening on port ${port}`)
-    connection = createConnection(customDBConfig);
+   const dbConfObject = confController.readFileSync(__dirname, "/public/DBconf/dbconf.csv");
+    console.log(dbConfObject);
+    connection = createConnection(dbConfObject);
 
 });
