@@ -10,10 +10,16 @@ const basicUtils = {
 
     }
 ,
-    getQueryString (tableName, quertLimit) {
+    getQueryString (tableName, quertLimit, searchString, sortOrder) {
 
         let queryString;
-        if(tableName !== undefined && quertLimit !== undefined && isFinite(quertLimit)) 
+        if(searchString !== undefined && sortOrder !== undefined && quertLimit !== undefined && isFinite(quertLimit))
+            queryString = `SELECT * FROM ${tableName} ORDER BY ${searchString} ${sortOrder} LIMIT ${quertLimit}`;
+
+        else if(searchString !== undefined && quertLimit !== undefined && isFinite(quertLimit))
+            queryString = `SELECT * FROM ${tableName} ORDER BY ${searchString}  LIMIT ${quertLimit}`;
+
+        else if(tableName !== undefined && quertLimit !== undefined && isFinite(quertLimit)) 
             queryString = `SELECT * FROM ${tableName} LIMIT ${quertLimit}`;
 
         else if(tableName !== undefined)

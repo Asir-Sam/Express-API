@@ -1,10 +1,10 @@
 const basicUtils = require('../UTIL/basicUtil');
 
-function selectQuery (connection, tableName, quertLimit ,res) {
-    let queryString = basicUtils.getQueryString(tableName, quertLimit);
+function selectQuery (connection, tableName, quertLimit, searchString, sortOrder,res) {
+    let queryString = basicUtils.getQueryString(tableName, quertLimit, searchString, sortOrder);
     if(queryString !== null && queryString !== undefined) {
         var DBresult = connection.query(queryString, function (err, result, fields) {
-            if (err) throw err;
+            if (err) res.status(404).send(err);
        
             res.status(200).json(result);
             

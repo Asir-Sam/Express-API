@@ -49,6 +49,20 @@ const customDBConfig = {
         return Object.keys(queryParam).includes('limit') ? queryParam['limit'] : undefined;
     
     }
+    ,
+    getSearch (queryParam) {
+
+      if(!basicUtils.isEmptyObject(queryParam))
+        return Object.keys(queryParam).includes('search') ? queryParam['search'] : undefined;
+
+    }
+    ,
+    getSortOrder (queryParam) {
+
+      if(!basicUtils.isEmptyObject(queryParam))
+        return Object.keys(queryParam).includes('sort') ? queryParam['sort'] : undefined;
+
+    }
 
  } 
 
@@ -56,9 +70,11 @@ const customDBConfig = {
 app.get('/ems/api/inventory/:inventoryType', (req, res, next) => {
 
     let tableName = tableMapping.getInventoryTable(req.params.inventoryType, res);
-    let quertLimit = tableMapping.getLimit(req.query);
-    console.log(quertLimit);
-    let dbData = selectQuery(connection, tableName, quertLimit, res);
+    let quertLimit = tableMapping.getLimit(req.query); 
+    let searchString = tableMapping.getSearch(req.query);
+    let sortOrder = tableMapping.getSortOrder(req.query);
+
+    let dbData = selectQuery(connection, tableName, quertLimit, searchString, sortOrder, res);
     
   });
   
@@ -73,6 +89,6 @@ app.listen(port, (err, res) => {
     console.log(`Example app listening on port ${port}`)
    const dbConfObject = confController.readFileSync(__dirname, "/public/DBconf/dbconf.csv");
     console.log(dbConfObject);
-    connection = createConnection(dbConfObject);
+    connection = createConnection(customDBConfig);
 
 });
