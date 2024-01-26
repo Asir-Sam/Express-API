@@ -1,8 +1,8 @@
 const basicUtils = require('../UTIL/basicUtil');
 
-function selectQuery (connection, tableName, quertLimit, searchString, sortOrder,res) {
+function selectQuery (connection, tableName, quertLimit, searchString, sortOrder, columnName, likeBy, res) {
     let queryFormation = '';;
-    queryFormation =` ${basicUtils.getTableName(queryFormation,tableName)} ${basicUtils.getOrderBy(queryFormation,searchString, sortOrder)} ${basicUtils.getLimit(queryFormation,quertLimit)}`;
+    queryFormation =` ${basicUtils.getTableName(queryFormation,tableName)} ${basicUtils.getLikeBy(queryFormation, columnName, likeBy)} ${basicUtils.getOrderBy(queryFormation,searchString, sortOrder)} ${basicUtils.getLimit(queryFormation,quertLimit)}`;
     let queryString = basicUtils.getQueryString(tableName, quertLimit, searchString, sortOrder);
     if(queryString !== null && queryString !== undefined) {
         var DBresult = connection.query(queryFormation, function (err, result, fields) {

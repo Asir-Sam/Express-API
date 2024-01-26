@@ -63,6 +63,21 @@ const customDBConfig = {
         return Object.keys(queryParam).includes('sort') ? queryParam['sort'] : undefined;
 
     }
+    ,
+    getLikeValue (queryParam) {
+
+      if(!basicUtils.isEmptyObject(queryParam)){
+          return Object.keys(queryParam).includes('like') ? queryParam['like'] : undefined;
+      }
+
+    }
+    ,
+    getWhereColumnName (queryParam) {
+
+      if(!basicUtils.isEmptyObject(queryParam)){
+          return Object.keys(queryParam).includes('col') ? queryParam['col'] : undefined;
+      }
+    }
 
  } 
 
@@ -73,8 +88,11 @@ app.get('/ems/api/inventory/:inventoryType', (req, res, next) => {
     let quertLimit = tableMapping.getLimit(req.query); 
     let searchString = tableMapping.getSearch(req.query);
     let sortOrder = tableMapping.getSortOrder(req.query);
+    let columnName = tableMapping.getWhereColumnName(req.query);
+    let likeBy = tableMapping.getLikeValue(req.query);
+    console.log(columnName,likeBy);
 
-    let dbData = selectQuery(connection, tableName, quertLimit, searchString, sortOrder, res);
+    let dbData = selectQuery(connection, tableName, quertLimit, searchString, sortOrder, columnName, likeBy, res);
     
   });
   

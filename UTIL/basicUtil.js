@@ -48,7 +48,7 @@ const basicUtils = {
     return queryString;    
 
     }
- ,
+,
     getLimit (queryString, limit) { 
 
         if(isFinite(limit))
@@ -68,10 +68,20 @@ const basicUtils = {
             return "";
         if(basicUtils.isValidString(sortOrder))
             queryString = `ORDER BY ${orderBy} ${sortOrder}`;
-        
+
     return queryString;  
 
-    }   
+    }  
+,
+    getLikeBy (queryString, columnName, likeString) {    
+
+        if(basicUtils.isValidString(likeString) && basicUtils.isValidString(columnName))
+            queryString = `WHERE ${columnName} LIKE "${likeString}%"`;
+        else 
+            return "";
+
+    return queryString;         
+    }
 };
 
 module.exports = basicUtils;
