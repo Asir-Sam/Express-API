@@ -10,6 +10,13 @@ const basicUtils = {
 
     }
 ,
+
+     isValidString(str) {
+
+            return typeof str === 'string';
+        
+    }
+, 
     getQueryString (tableName, quertLimit, searchString, sortOrder) {
 
         let queryString;
@@ -26,10 +33,45 @@ const basicUtils = {
             queryString = `SELECT * FROM ${tableName}`;
 
         else  return null;
-
+        console.log(queryString);
         return queryString;
 
     }
+,
+    getTableName (queryString, tableName) {
+
+        if(basicUtils.isValidString(tableName))
+            queryString = `SELECT * FROM ${tableName}`;
+        else
+            return "";
+
+    return queryString;    
+
+    }
+ ,
+    getLimit (queryString, limit) { 
+
+        if(isFinite(limit))
+             queryString = `LIMIT ${limit}`;
+        else 
+            return "";
+
+    return queryString        
+
+    }  
+,
+    getOrderBy (queryString, orderBy, sortOrder) { 
+
+        if(basicUtils.isValidString(orderBy))
+            queryString = `ORDER BY ${orderBy}`;
+        else 
+            return "";
+        if(basicUtils.isValidString(sortOrder))
+            queryString = `ORDER BY ${orderBy} ${sortOrder}`;
+        
+    return queryString;  
+
+    }   
 };
 
 module.exports = basicUtils;
