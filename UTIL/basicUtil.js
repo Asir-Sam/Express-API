@@ -82,6 +82,21 @@ const basicUtils = {
 
     return queryString;         
     }
+,
+    getWhereBy (queryString, columnName, columnValue) {
+
+        if(typeof(columnName) == "string"){
+            if(basicUtils.isValidString(columnName) && basicUtils.isValidString(columnValue))
+                queryString = `WHERE ${columnName} = "${columnValue}"`;
+            else 
+                return "";
+        }
+        else 
+            queryString = `WHERE ${columnName[0]} = "${columnValue[0]}" AND ${columnName[1]} = "${columnValue[1]}`;
+
+
+    return queryString;         
+    }
 };
 
 module.exports = basicUtils;

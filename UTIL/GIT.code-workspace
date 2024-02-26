@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "Express-API",
+			"path": "../../Learn-react-withme/Express-API"
+		},
+		{
+			"name": "Express-API-1",
+			"path": "../../Express-API-1"
+		}
+	],
+	"settings": {}
+}
