@@ -16,6 +16,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 app.use(cors());
+const EMS = require('./GENGUI-ROUTES/_gengui_routes_');
+app.use('/EMS', EMS);
+const VEE = require('./VEE_ROUTES/_vee_routes_');
+app.use('/VEE', VEE);
+
 var connection;
 app.use(express.static('./public'));
 const customDBConfig = {
@@ -115,7 +120,6 @@ app.get('/ems/api/inventory/:inventoryType', (req, res, next) => {
 
   app.post('/api/userauth', cors(corsOptions) ,(req, res) => {
 
-      console.log(req.body.data);
       let email = req.body.data.email;
       let password = req.body.data.password;
     let userauthe =   UserAuth(connection, 'USER_AUTH', 'email', email, password,res);

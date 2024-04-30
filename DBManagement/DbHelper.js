@@ -16,31 +16,31 @@ function selectQuery (connection, tableName, quertLimit, searchString, sortOrder
     res.status(404).send("Please Check Your Params");
 }
 
-function createTable(connection,tableName, columns) {
+// function createTable(connection,tableName, columns) {
 
-    let query = `CREATE TABLE IF NOT EXISTS ${tableName} (`;
-    columns.forEach(column => {
-      query += `${column.name} ${column.type}`;
+//     let query = `CREATE TABLE IF NOT EXISTS ${tableName} (`;
+//     columns.forEach(column => {
+//       query += `${column.name} ${column.type}`;
   
-      if (column.primaryKey) {
-        query += ' PRIMARY KEY';
-      }
+//       if (column.primaryKey) {
+//         query += ' PRIMARY KEY';
+//       }
   
-      query += ', ';
-    });
+//       query += ', ';
+//     });
   
-    query = query.slice(0, -2) + ')';
-    connection.query(query, (err, results) => {
-      if (err) {
-        console.error('Error creating table:', err);
-      } else {
-        console.log('Table created successfully');
-      }
-    });
+//     query = query.slice(0, -2) + ')';
+//     connection.query(query, (err, results) => {
+//       if (err) {
+//         console.error('Error creating table:', err);
+//       } else {
+//         console.log('Table created successfully');
+//       }
+//     });
 
-  }
+//   }
 
 
 
 module.exports = selectQuery;
-module.exports = createTable;
+//module.exports = createTable;
